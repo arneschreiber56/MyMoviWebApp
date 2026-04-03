@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>MyMovieWebApp</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <img src="{{ url_for('static', filename='logo.png') }}"
+           alt="App Logo"
+           width="200">
+      <h1>🎬 MyMovieWebApp</h1>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <div class="content">
+
+      <!-- NAVIGATION -->
+      <nav>
+        <ul>
+          <li><a href="/" aria-current="page">🏡 Home</a></li>
+          <li><a href="/users">👤 Users</a></li>
+          <li><a href="/add_user">➕ Add User</a></li>
+        </ul>
+      </nav>
+
+      <!-- MAIN CONTENT -->
+      <div class="container">
+
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flash-messages">
+              {% for category, message in messages %}
+                <li class="flash {{ category }}">{{ message }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <!-- PAGE CONTENT -->
+        {% block content %}
+        {% endblock %}
+
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© {{ 2026 }} MyMovieWebApp — All Rights Reserved</p>
+    </footer>
+
+  </body>
+</html>

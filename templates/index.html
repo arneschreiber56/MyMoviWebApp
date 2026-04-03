@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h1>Users</h1>
+
+  {% if users %}
+    <ul>
+      {% for user in users %}
+        <li>
+          <a href="{{ url_for('movies_handler_user', user_id=user.id) }}">
+            {{ user.name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No users yet. Add your first user 👇</p>
+  {% endif %}
+
+{% endblock %}
+
