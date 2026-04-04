@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h1>Movies for {{ user.name }}</h1>
+
+  {% if not user_movies %}
+    <div class="empty">
+      <h2>No movies in your list yet 🎬</h2>
+      <p>Add your first movie below.</p>
+    </div>
+  {% else %}
+    <ul class="movie-canvas">
+      {% for user_movie in user_movies %}
+        <li class="movie-cards">
+
+          <div class="movie-info">
+            <img
+              src="{{ user_movie.movie.poster_url }}"
+              alt="Poster for {{ user_movie.movie.title }}"
+              class="movie-poster"
+            >
+
+            <h3>{{ user_movie.movie.title }}</h3>
+
+            <div>
+              <strong>Year:</strong> {{ user_movie.movie.year }}
+            </div>
+
+            <div>
+              <strong>Director:</strong> {{ user_movie.movie.director }}
+            </div>
+          </div>
+
+          <form
+            action="{{ url_for('update_movie_name_list_user', user_id=user.id, movie_id=user_movie.movie.id) }}"
+            method="post"
+          >
+            <input
+              type="text"
+              name="title"
+              value="{{ user_movie.movie.title }}"
+              required
+            >
+            <button type="submit" class="btn btn-update">
+              Update
+            </button>
+          </form>
+
+          <form
+            action="{{ url_for('delete_movie_user_list', user_id=user.id, movie_id=user_movie.movie.id) }}"
+            method="post"
+          >
+            <button
+              type="submit"
+              class="btn btn-delete"
+              onclick="return confirm('Delete this movie?')"
+            >
+              Delete
+            </button>
+          </form>
+
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="form-section">
+    <h2>Add New Movie</h2>
+
+    <form
+      action="{{ url_for('movies_handler_user', user_id=user.id) }}"
+      method="post"
+    >
+      <input
+        type="text"
+        name="title"
+        placeholder="Movie title"
+        required
+      >
+
+      <button type="submit" class="btn-add">
+        Add Movie
+      </button>
+    </form>
+  </div>
+
+{% endblock %}

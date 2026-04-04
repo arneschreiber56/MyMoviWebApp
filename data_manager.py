@@ -103,6 +103,13 @@ class DataManager:
         """
         return self.session.get(Movie, movie_id)
 
+    def get_movie_by_title(self, title: str) -> Movie | None:
+        """
+        Return a movie by exact title or None if not found.
+        """
+        return self.session.query(Movie).filter_by(title=title).first()
+
+
     def get_all_movies(self) -> list[Movie]:
         """
         Returns all movies.
@@ -256,6 +263,24 @@ class DataManager:
         Returns True if deleted, False if not found.
         """
         user_movie = self.session.get(UserMovie, user_movie_id)
+        if not user_movie:
+            return False
+
+        self.session.delete(user_movie)
+        self.session.commit()
+        return True
+
+    def delete_user_movie_by_user_and_movie(self, user_id: int,
+                                            movie_id: int) -> bool:
+        """
+        Delete a UserMovie entry by user_id and movie_id.
+        Returns True if deleted, otherwise False.
+        """
+        user_movie = self.session.query(UserMovie).filter_by(
+            user_id=user_id,
+            movie_id=movie_id
+        ).first()
+
         if not user_movie:
             return False
 

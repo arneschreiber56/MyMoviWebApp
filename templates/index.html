@@ -17,6 +17,14 @@
   {% else %}
     <p>No users yet. Add your first user 👇</p>
   {% endif %}
+  <div class="form-section">
+    <h2>Add New User</h2>
+    <form action="/users" method="post">
+      <input type="text" id="name" name="name" placeholder="User Name" required>
+      <button type="submit" class="btn-add">Add User</button>
+    </form>
+
+  </div>
 
 {% endblock %}
 
