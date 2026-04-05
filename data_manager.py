@@ -43,9 +43,9 @@ class DataManager:
 
     def get_all_users(self) -> list[User]:
         """
-        Returns all users.
+        Returns all users sorted alphabetically by name.
         """
-        return self.session.query(User).all()
+        return self.session.query(User).order_by(User.name).all()
 
     def update_user(self, user_id: int, new_name: str) -> User | None:
         """
@@ -108,7 +108,6 @@ class DataManager:
         Return a movie by exact title or None if not found.
         """
         return self.session.query(Movie).filter_by(title=title).first()
-
 
     def get_all_movies(self) -> list[Movie]:
         """
@@ -270,8 +269,11 @@ class DataManager:
         self.session.commit()
         return True
 
-    def delete_user_movie_by_user_and_movie(self, user_id: int,
-                                            movie_id: int) -> bool:
+    def delete_user_movie_by_user_and_movie(
+            self,
+            user_id: int,
+            movie_id: int
+            ) -> bool:
         """
         Delete a UserMovie entry by user_id and movie_id.
         Returns True if deleted, otherwise False.

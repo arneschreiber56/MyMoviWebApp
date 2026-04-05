@@ -125,6 +125,59 @@ nav a:active {
 }
 
 /* =========================
+   USER LIST (users.html)
+   ========================= */
+
+.users_page .user-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0;
+    display: block;
+}
+
+.users_page .user-row {
+    display: block;
+    background-color: #ffffff;
+    padding: 15px 20px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.users_page .user-row:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+}
+
+.users_page .user-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.users_page .user-actions {
+    display: block;
+}
+
+.users_page .user-actions .btn {
+    width: auto;
+    min-width: 140px;
+    display: inline-flex;
+}
+
+.users_page .user-actions .btn-info {
+    background-color: #5b7cfa;
+    color: #fff;
+    text-decoration: none;
+}
+
+.users_page .user-actions .btn-info:hover {
+    background-color: #4667e6;
+}
+
+/* =========================
    MOVIE GRID (user.html)
    ========================= */
 
@@ -188,6 +241,25 @@ nav a:active {
     margin-bottom: 8px;
 }
 
+.movie-cards select,
+.movie-cards textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.movie-cards label {
+    display: block;
+    margin: 8px 0 4px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
 /* Form Container */
 .form-section {
     margin-top: 30px;
@@ -211,15 +283,19 @@ nav a:active {
 
 /* Empty State */
 .empty {
+    display: flex;
+    flex-direction: column;
     text-align: center;
     margin-top: 50px;
 }
 
 .empty h2 {
+    display: flex;
     margin-bottom: 10px;
 }
 
 .empty p {
+    display: flex;
     color: #666;
 }
 

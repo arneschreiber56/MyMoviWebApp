@@ -3,12 +3,14 @@
 {% block content %}
 
   <h1>Movies for {{ user.name }}</h1>
-
+  <!-- No Movie Case -->
   {% if not user_movies %}
     <div class="empty">
       <h2>No movies in your list yet 🎬</h2>
       <p>Add your first movie below.</p>
     </div>
+
+  <!-- Movies Exist Case-->
   {% else %}
     <ul class="movie-canvas">
       {% for user_movie in user_movies %}
@@ -32,6 +34,51 @@
             </div>
           </div>
 
+          <!-- User-specific details -->
+          <form
+            action="{{ url_for('update_user_movie_details', user_id=user.id, movie_id=user_movie.movie.id) }}"
+            method="post"
+          >
+            <label for="status-{{ user_movie.movie.id }}">Status</label>
+            <select name="status" id="status-{{ user_movie.movie.id }}">
+              <option value="watchlist"
+                {% if user_movie.status == "watchlist" %}selected{% endif %}>
+                Watchlist
+              </option>
+              <option value="watched"
+                {% if user_movie.status == "watched" %}selected{% endif %}>
+                Watched
+              </option>
+              <option value="favorite"
+                {% if user_movie.status == "favorite" %}selected{% endif %}>
+                Favorite
+              </option>
+            </select>
+
+            <label for="rating-{{ user_movie.movie.id }}">Rating (1–10)</label>
+            <input
+              type="number"
+              name="rating"
+              id="rating-{{ user_movie.movie.id }}"
+              min="1"
+              max="10"
+              value="{{ user_movie.rating if user_movie.rating is not none else '' }}"
+            >
+
+            <label for="review-{{ user_movie.movie.id }}">Review</label>
+            <textarea
+              name="review"
+              id="review-{{ user_movie.movie.id }}"
+              rows="4"
+              placeholder="Write a short review..."
+            >{{ user_movie.review if user_movie.review else '' }}</textarea>
+
+            <button type="submit" class="btn btn-update">
+              Save Details
+            </button>
+          </form>
+
+          <!-- Global movie title update -->
           <form
             action="{{ url_for('update_movie_name_list_user', user_id=user.id, movie_id=user_movie.movie.id) }}"
             method="post"
@@ -43,10 +90,11 @@
               required
             >
             <button type="submit" class="btn btn-update">
-              Update
+              Update Title
             </button>
           </form>
 
+          <!-- Delete -->
           <form
             action="{{ url_for('delete_movie_user_list', user_id=user.id, movie_id=user_movie.movie.id) }}"
             method="post"
@@ -68,10 +116,7 @@
   <div class="form-section">
     <h2>Add New Movie</h2>
 
-    <form
-      action="{{ url_for('movies_handler_user', user_id=user.id) }}"
-      method="post"
-    >
+    <form action="{{ url_for('movies_handler_user', user_id=user.id) }}" method="post">
       <input
         type="text"
         name="title"

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="empty">
+    <h2>404 – Not found 🚫</h2>
+    <p>The requested page or resource could not be found.</p>
+    <p>It may have been deleted or never existed.</p>
+
+    <a href="{{ url_for('home') }}" class="btn-add">
+      Go back home
+    </a>
+  </div>
+{% endblock %}

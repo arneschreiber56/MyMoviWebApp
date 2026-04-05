@@ -23,9 +23,26 @@
       <!-- NAVIGATION -->
       <nav>
         <ul>
-          <li><a href="/" aria-current="page">🏡 Home</a></li>
-          <li><a href="/users">👤 Users</a></li>
-          <li><a href="/add_user">➕ Add User</a></li>
+          <li>
+            <a href="{{ url_for('home') }}"
+               {% if request.endpoint == 'home' %}aria-current="page"{% endif %}>
+              🏡 Home
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ url_for('list_users') }}"
+               {% if request.endpoint == 'list_users' %}aria-current="page"{% endif %}>
+              👤 Users
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ url_for('movies_handler') }}"
+               {% if request.endpoint == 'movies_handler' %}aria-current="page"{% endif %}>
+              🎥 Movies
+            </a>
+          </li>
         </ul>
       </nav>
 

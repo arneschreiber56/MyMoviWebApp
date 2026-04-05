@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Movies in Database</h1>
+<!-- No Movies in Database -->
+{% if not movies %}
+    <div class="empty">
+      <h2>No movies in your database yet 🎬</h2>
+      <p>Add your first movie below.</p>
+    </div>
+<!-- Existing Movies in Database -->
+  {% else %}
+    <ul class="movie-canvas">
+      {% for movie in movies %}
+        <li class="movie-cards">
+
+          <div class="movie-info">
+            <img
+              src="{{ movie.poster_url }}"
+              alt="Poster for {{ movie.title }}"
+              class="movie-poster"
+            >
+
+            <h3>{{ movie.title }}</h3>
+
+            <div>
+              <strong>Year:</strong> {{ movie.year }}
+            </div>
+
+            <div>
+              <strong>Director:</strong> {{ movie.director }}
+            </div>
+          </div>
+
+          <form
+            action="{{ url_for('update_movie_name', movie_id=movie.id) }}"
+            method="post"
+          >
+            <input
+              type="text"
+              name="title"
+              value="{{ movie.title }}"
+              required
+            >
+            <button type="submit" class="btn btn-update">
+              Update
+            </button>
+          </form>
+
+          <form
+            action="{{ url_for('delete_movie', movie_id=movie.id) }}"
+            method="post"
+          >
+            <button
+              type="submit"
+              class="btn btn-delete"
+              onclick="return confirm('Delete this movie?')"
+            >
+              Delete
+            </button>
+          </form>
+
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <div class="form-section">
+    <h2>Add New Movie</h2>
+
+    <form
+      action="{{ url_for('movies_handler') }}"
+      method="post"
+    >
+      <input
+        type="text"
+        name="title"
+        placeholder="Movie title"
+        required
+      >
+
+      <button type="submit" class="btn-add">
+        Add Movie
+      </button>
+    </form>
+  </div>
+{% endblock %}
